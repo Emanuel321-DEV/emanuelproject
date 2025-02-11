@@ -1,0 +1,22 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <!-- <div class="logo">
+      <img src="assets/chatwoot-logo.png" alt="Chatwoot Logo">
+    </div> -->
+    <h2>Seja Bem Vindo!</h2>
+
+    <form (ngSubmit)="onLogin()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="email" name="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" [(ngModel)]="password" name="password" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="login-button">Entrar</button>
+    </form>
+  </mat-card>
+</div>
