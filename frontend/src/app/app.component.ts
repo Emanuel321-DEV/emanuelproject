@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +9,10 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'frontend';
+  constructor(private router: Router) {}
+
+  shouldShowSidebar(): boolean {
+    return this.router.url !== '/login';
+  }
+  
 }

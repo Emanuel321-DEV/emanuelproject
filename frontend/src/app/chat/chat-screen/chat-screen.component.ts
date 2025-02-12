@@ -3,6 +3,7 @@ import { ChatInputComponent } from '../chat-input/chat-input.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 interface Chat {
   id: number;
@@ -21,6 +22,7 @@ interface Message {
     CommonModule,
     MatCardModule,
     ChatInputComponent,
+    SidebarComponent,
     MatToolbarModule
   ],
   templateUrl: './chat-screen.component.html',

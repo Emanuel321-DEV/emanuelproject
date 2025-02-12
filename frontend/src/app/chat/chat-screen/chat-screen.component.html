@@ -1,22 +1,3 @@
-<div class="chat-screen">
-    <mat-toolbar color="primary">
-      <span *ngIf="chat; else noChatSelected">{{ chat.name }}</span>
-      <ng-template #noChatSelected>
-        <span>Selecione um chat</span>
-      </ng-template>
-    </mat-toolbar>
-  
-    <!-- Área de Mensagens -->
-    <div class="messages-container" style="padding: 1rem; height: calc(100vh - 160px); overflow-y: auto;">
-      <div *ngFor="let message of messages" [ngClass]="{'sent': message.sentByMe, 'received': !message.sentByMe}" style="margin-bottom: 1rem;">
-        <mat-card>
-          <mat-card-content>
-            {{ message.text }}
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  
-    <app-chat-input (sendMessage)="handleSendMessage($event)"></app-chat-input>
+<div class="chat-container">
+  <app-sidebar></app-sidebar>
 </div>
-  

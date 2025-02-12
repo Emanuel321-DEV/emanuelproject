@@ -1,0 +1,24 @@
+<aside class="sidebar">
+    <nav>
+      <ul>
+        <li class="profile-link link-hover">
+          <a routerLink="/chat" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular></a>
+        </li>
+        <li class="profile-link link-hover">
+          <a routerLink="/contact" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="CircleUserRound  " class="my-icon"></lucide-angular></a>
+        </li>
+        <li class="profile-link link-hover">
+          <a routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="LayoutDashboard " class="my-icon"></lucide-angular></a>
+        </li>
+      </ul>
+    </nav>
+    <div class="bottom-section">
+      <ul>
+        <li class="profile-link link-hover">
+          <a routerLink="/settings" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" ><lucide-angular [img]="Settings "></lucide-angular></a>
+        </li>
+        <li class="profile-link"><a routerLink="/profile" ><img src="assets/user.jpg" alt="Foto de Perfil" class="my-icon profile-photo"></a></li>
+      </ul>
+    </div>
+  </aside>
+  

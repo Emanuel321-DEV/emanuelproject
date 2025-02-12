@@ -3,6 +3,7 @@ import { ChatListComponent } from '../chat-list/chat-list.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { ChatScreenComponent } from '../chat-screen/chat-screen.component';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 interface Chat {
   id: number;
@@ -13,7 +14,7 @@ interface Chat {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MatSidenavModule, ChatListComponent, ChatScreenComponent],
+  imports: [MatSidenavModule, SidebarComponent ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })

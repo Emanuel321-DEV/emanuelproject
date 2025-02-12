@@ -1,0 +1,11 @@
+.chat-container {
+    display: flex;
+    height: 100vh;
+  
+    .chat-content {
+      flex-grow: 1; // Faz com que o conteúdo do chat ocupe o restante do espaço
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+  }
+  
