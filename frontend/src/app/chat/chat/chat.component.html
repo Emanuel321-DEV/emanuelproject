@@ -1,0 +1,11 @@
+<div class="chat-container" style="height: 100vh; display: flex;">
+    <mat-sidenav-container style="width: 100%;">
+      <mat-sidenav mode="side" opened style="width: 25%;">
+        <app-chat-list [chats]="chats" (chatSelected)="onChatSelected($event)"></app-chat-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <app-chat-screen [chat]="selectedChat"></app-chat-screen>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+  
