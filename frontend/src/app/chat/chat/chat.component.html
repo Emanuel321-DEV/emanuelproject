@@ -7,17 +7,26 @@
       </mat-toolbar>
 
       <mat-nav-list>
-        <mat-list-item
-          *ngFor="let conversa of conversas"
-          (click)="openChat(conversa)"
-        >
-          <div class="list-chat-img"><img src="assets/user.jpg" alt="Foto de Perfil" class="profile-photo"></div>
-          <div class="list-chat-content">
-            <div mat-line>{{ conversa.nome }}</div>
-            <div mat-line class="secondary">{{ conversa.ultimaMensagem }}</div>
+        <mat-list-item *ngFor="let conversa of conversas" (click)="openChat(conversa)">
+          <div class="list-chat-container">
+            <div class="list-chat-img-container">
+              <img src="assets/user.jpg" alt="Foto de Perfil" class="list-chat-img">
+            </div>
+      
+            <div class="list-chat-content">
+              <div class="list-chat-header">
+                <span class="chat-name">{{ conversa.nome }}</span>
+                <span class="chat-time">2:38 PM</span>
+              </div>
+              <div class="list-chat-message">
+                {{ conversa.ultimaMensagem }}
+              </div>
+            </div>
           </div>
         </mat-list-item>
       </mat-nav-list>
+      
+      
     </div>
 
     <div class="chat-main">
