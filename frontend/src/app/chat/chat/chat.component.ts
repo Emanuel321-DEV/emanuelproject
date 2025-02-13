@@ -1,32 +1,66 @@
-import { Component } from '@angular/core';
-import { ChatListComponent } from '../chat-list/chat-list.component';
+import { Component, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { CommonModule } from '@angular/common';
-import { ChatScreenComponent } from '../chat-screen/chat-screen.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, MessageCircle, CircleUserRound, LayoutDashboard, Settings } from 'lucide-angular';
+import { MatInputModule } from '@angular/material/input';
 
-interface Chat {
-  id: number;
-  name: string;
-  lastMessage: string;
-}
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MatSidenavModule, SidebarComponent ],
+  imports: [MatSidenavModule, SidebarComponent, MatFormFieldModule, MatListModule, CommonModule, MatToolbarModule, FormsModule, LucideAngularModule, MatInputModule ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
-export class ChatComponent {
-  chats: Chat[] = [
-    { id: 1, name: 'Amor ❤️', lastMessage: 'O que resolve dor de estômago?' },
-    { id: 2, name: 'Programar', lastMessage: '000201010212...' }
+export class ChatComponent implements OnInit {
+  readonly MessageCircle  = MessageCircle ;
+  readonly CircleUserRound   = CircleUserRound  ;
+  readonly LayoutDashboard   = LayoutDashboard  ;
+  readonly Settings   = Settings  ;
+
+  conversas = [
+    {
+      nome: 'João',
+      ultimaMensagem: 'Como você está?',
+      mensagens: [
+        { texto: 'Oi, tudo bem?', tipo: 'enviado' },
+        { texto: 'Como você está?', tipo: 'recebido' }
+      ]
+    },
+    {
+      nome: 'Maria',
+      ultimaMensagem: 'Legal!',
+      mensagens: [
+        { texto: 'E aí, novidades?', tipo: 'recebido' },
+        { texto: 'Sim, várias!', tipo: 'enviado' }
+      ]
+    }
   ];
 
-  selectedChat: Chat | null = null;
+  conversaAtual: any;
+  novaMensagem: string = '';
 
-  onChatSelected(chat: Chat) {
-    this.selectedChat = chat;
+  ngOnInit(): void {
+    // Seleciona a primeira conversa por padrão
+    this.conversaAtual = this.conversas[0];
+  }
+
+  openChat(conversa: any) {
+    this.conversaAtual = conversa;
+  }
+
+  enviarMensagem() {
+    if (this.novaMensagem.trim()) {
+      this.conversaAtual.mensagens.push({
+        texto: this.novaMensagem,
+        tipo: 'enviado'
+      });
+      this.novaMensagem = '';
+    }
   }
 }

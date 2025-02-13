@@ -1,3 +1,66 @@
 <div class="chat-container">
   <app-sidebar></app-sidebar>
+  <div class="chat-layout">
+    <div class="conversation-list">
+      <mat-toolbar>
+        <span>Conversas</span>
+      </mat-toolbar>
+
+      <mat-nav-list>
+        <mat-list-item
+          *ngFor="let conversa of conversas"
+          (click)="openChat(conversa)"
+        >
+          <div class="list-chat-img"><img src="assets/user.jpg" alt="Foto de Perfil" class="profile-photo"></div>
+          <div class="list-chat-content">
+            <div mat-line>{{ conversa.nome }}</div>
+            <div mat-line class="secondary">{{ conversa.ultimaMensagem }}</div>
+          </div>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+
+    <div class="chat-main">
+      <mat-toolbar color="primary">
+        <span>{{ conversaAtual?.nome }}</span>
+        <span class="spacer"></span>
+        <button mat-icon-button>
+          <lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular>
+        </button>
+      </mat-toolbar>
+
+      <div class="messages-area">
+        <div
+          class="mensagem"
+          *ngFor="let msg of conversaAtual?.mensagens"
+          [ngClass]="{
+            'enviado': msg.tipo === 'enviado',
+            'recebido': msg.tipo === 'recebido'
+          }"
+        >
+          <div class="conteudo">{{ msg.texto }}</div>
+        </div>
+      </div>
+
+      
+      <div class="input-area">
+        <mat-form-field appearance="outline" class="chat-input">
+          <mat-label>Digite sua mensagem</mat-label>
+          <input
+            matInput
+            [(ngModel)]="novaMensagem"
+            (keyup.enter)="enviarMensagem()"
+          />
+        </mat-form-field>
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="enviarMensagem()"
+        >
+        <lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular>
+        </button>
+      </div>
+    </div>
+  </div>
+
 </div>
