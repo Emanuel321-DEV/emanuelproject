@@ -15,7 +15,9 @@
     <div class="bottom-section">
       <ul>
         <li class="profile-link link-hover">
-          <a routerLink="/settings" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" ><lucide-angular [img]="Settings "></lucide-angular></a>
+          <a href="#" (click)="confirmLogout($event)">
+            <lucide-angular [img]="LogOut"></lucide-angular>
+          </a>
         </li>
         <li class="profile-link"><a routerLink="/profile" ><img src="assets/user.jpg" alt="Foto de Perfil" class="my-icon profile-photo"></a></li>
       </ul>

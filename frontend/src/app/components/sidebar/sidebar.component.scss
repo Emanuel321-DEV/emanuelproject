@@ -75,10 +75,13 @@
   }
 
   .active-link {
-    border-left: 4px solid #00ff00; 
-    background-color: rgba(0, 255, 0, 0.1); 
-    border-radius: 8px; 
-    padding-left: 12px; 
+    background-color: rgb(94, 94, 94);
+    border-radius: 8px;
+    padding: 4px; 
+  }
+  
+  .active-link .my-icon {
+    color: #00ff00;
   }
 
 }

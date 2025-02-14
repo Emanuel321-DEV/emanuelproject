@@ -1,0 +1,66 @@
+<div class="contact-container">
+  <app-sidebar></app-sidebar>
+  
+  <div class="conversation-list">
+    <mat-toolbar>
+      <span>Contatos</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="openNewContactForm()" class="contact-add">
+        <lucide-angular [img]="Plus" class="my-icon"></lucide-angular>
+      </button>
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <mat-list-item *ngFor="let contact of contacts" (click)="openContactForm(contact)">
+        <div class="list-contact-container">
+          <div class="list-contact-icon-container">
+            <lucide-angular [img]="CircleUserRound" class="contact-icon"></lucide-angular>
+          </div>
+
+          <div class="list-contact-content">
+            <div class="list-contact-header">
+              <span class="contact-name">{{ contact.name }}</span>
+              <span class="contact-source">{{ contact.source }}</span>
+            </div>
+            <div class="list-contact-description">
+              {{ contact.description }}
+            </div>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+
+  <div class="contact-main" *ngIf="showForm">
+    <mat-toolbar color="primary">
+      <span>{{ selectedContact.name ? 'Editar Contato' : 'Adicionar Contato' }}</span>
+      <span class="spacer"></span>
+    </mat-toolbar>
+
+    <div class="form-area">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="selectedContact.name"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descrição</mat-label>
+        <input matInput [(ngModel)]="selectedContact.description" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Origem</mat-label>
+        <input matInput [(ngModel)]="selectedContact.source" />
+      </mat-form-field>
+
+      <div class="buttons-row">
+        <button mat-raised-button color="primary" (click)="saveContact()">
+          Salvar...
+        </button>
+        <button mat-raised-button color="warn" (click)="deleteContact()">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

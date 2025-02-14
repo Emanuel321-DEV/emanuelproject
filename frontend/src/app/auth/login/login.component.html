@@ -1,22 +1,33 @@
 <div class="login-container">
-  <mat-card class="login-card">
-    <!-- <div class="logo">
-      <img src="assets/chatwoot-logo.png" alt="Chatwoot Logo">
-    </div> -->
-    <h2>Seja Bem Vindo!</h2>
+  <div class="login-left">
+    <div class="logo">
+      <div>
+        <lucide-angular [img]="Phone" class="my-icon"></lucide-angular>
+      </div>
+      <h2>PosiChat | Seu canal de comunicação</h2>
+    </div>
+    <h1>Informe suas credenciais</h1>
 
     <form (ngSubmit)="onLogin()">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" [(ngModel)]="email" name="email" required>
+      <mat-form-field appearance="outline">
+        <mat-label>Insira seu email</mat-label>
+        <input matInput type="email" [(ngModel)]="email" name="email" required placeholder="positivosplus@gmail.com">
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Senha</mat-label>
-        <input matInput type="password" [(ngModel)]="password" name="password" required>
+      <mat-form-field appearance="outline">
+        <mat-label>Insira sua senha</mat-label>
+        <input matInput type="password" [(ngModel)]="password" name="password" required placeholder="positivo">
       </mat-form-field>
+
+      <mat-checkbox class="terms-checkbox">Aceitar termos e condições</mat-checkbox>
 
       <button mat-raised-button color="primary" class="login-button">Entrar</button>
+
+      <p class="signup-link">Não possui conta? <a href="#">Crie a sua aqui!</a></p>
     </form>
-  </mat-card>
+  </div>
+
+  <div class="login-right">
+    <img src="assets/login7.svg" alt="Login Ilustração">
+  </div>
 </div>
