@@ -1,13 +1,28 @@
 <div class="chat-container">
+  <!-- Barra lateral (caso queira manter) -->
   <app-sidebar></app-sidebar>
+  
+  <!-- Layout principal do chat -->
   <div class="chat-layout">
+    
+    <!-- Listagem de Conversas -->
     <div class="conversation-list">
-      <mat-toolbar>
-        <span>Conversas</span>
-      </mat-toolbar>
-
+      
+      <!-- Topo com título e campo de busca -->
+      <div class="list-header">
+        <h2>Chats</h2>
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Buscar conversas..." />
+        </mat-form-field>
+      </div>
+      
       <mat-nav-list>
-        <mat-list-item *ngFor="let conversa of conversas" (click)="openChat(conversa)">
+        <mat-list-item 
+          *ngFor="let conversa of conversas" 
+          (click)="openChat(conversa)"
+          class="list-item"
+        >
           <div class="list-chat-container">
             <div class="list-chat-img-container">
               <img src="assets/user.jpg" alt="Foto de Perfil" class="list-chat-img">
@@ -25,19 +40,31 @@
           </div>
         </mat-list-item>
       </mat-nav-list>
-      
-      
     </div>
-
+    
+    <!-- Área de conversa principal -->
     <div class="chat-main">
-      <mat-toolbar color="primary">
-        <span>{{ conversaAtual?.nome }}</span>
+      
+      <!-- Topo da conversa (nome, status, etc.) -->
+      <mat-toolbar class="chat-header" color="primary">
+        <div class="contact-info">
+          <img 
+            src="assets/user.jpg" 
+            alt="Foto de Perfil" 
+            class="contact-avatar"
+          />
+          <div class="contact-details">
+            <span class="contact-name">{{ conversaAtual?.nome }}</span>
+            <span class="contact-status">Online</span>
+          </div>
+        </div>
         <span class="spacer"></span>
         <button mat-icon-button>
-          <lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular>
+          <lucide-angular [img]="MessageCircle" class="my-icon"></lucide-angular>
         </button>
       </mat-toolbar>
 
+      <!-- Mensagens -->
       <div class="messages-area">
         <div
           class="mensagem"
@@ -51,7 +78,7 @@
         </div>
       </div>
 
-      
+      <!-- Campo de digitação -->
       <div class="input-area">
         <mat-form-field appearance="outline" class="chat-input">
           <mat-label>Digite sua mensagem</mat-label>
@@ -65,11 +92,11 @@
           mat-icon-button
           color="primary"
           (click)="enviarMensagem()"
+          class="send-button"
         >
-        <lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular>
+          <lucide-angular [img]="MessageCircle" class="my-icon"></lucide-angular>
         </button>
       </div>
     </div>
   </div>
-
 </div>
