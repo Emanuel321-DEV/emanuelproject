@@ -19,13 +19,13 @@ export class SidebarComponent {
   readonly LogOut   = LogOut  ;
 
   confirmLogout(event: Event): void {
-    event.preventDefault(); // Evita que o link recarregue a página
+    event.preventDefault();
     
     const shouldLogout = window.confirm('Tem certeza que deseja sair?');
     
     if (shouldLogout) {
       this.authService.logout();
-      this.router.navigate(['/login']); // Redireciona para a página de login
+      this.router.navigate(['/login']);
     }
   }
 
