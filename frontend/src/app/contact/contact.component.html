@@ -1,65 +1,118 @@
-<div class="contact-container">
+<div class="contact-container" [class.sidebar-open]="sidebarOpen">
+  <!-- Botão hamburguer (mobile) -->
+  <button class="hamburger-btn" (click)="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Sidebar -->
   <app-sidebar></app-sidebar>
-  
-  <div class="conversation-list">
-    <mat-toolbar>
-      <span>Contatos</span>
-      <span class="spacer"></span>
-      <button mat-icon-button (click)="openNewContactForm()" class="contact-add">
-        <lucide-angular [img]="Plus" class="my-icon"></lucide-angular>
-      </button>
-    </mat-toolbar>
 
-    <mat-nav-list>
-      <mat-list-item *ngFor="let contact of contacts" (click)="openContactForm(contact)">
-        <div class="list-contact-container">
-          <div class="list-contact-icon-container">
-            <lucide-angular [img]="CircleUserRound" class="contact-icon"></lucide-angular>
-          </div>
+  <div class="contact-layout">
+    <!-- LISTA DE CONTATOS -->
+    <!-- Só mostra se for desktop OU (não desktop e não abriu o form) -->
+    <div class="conversation-list" *ngIf="isDesktop || (!isDesktop && !isContactOpen)">
+      <div class="list-header">
+        <div class="header-top">
+          <h2>Contatos</h2>
+          <button mat-icon-button (click)="openNewContactForm()" class="contact-add">
+            <lucide-angular [img]="Plus" class="my-icon"></lucide-angular>
+          </button>
+        </div>
+        <div class="list-header-input-container">
+          <lucide-angular [img]="Search" class="my-icon"></lucide-angular>
+          <input 
+            matInput 
+            placeholder="Pesquisar contatos..."
+            class="list-header-input-search"
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+      </div>
 
-          <div class="list-contact-content">
-            <div class="list-contact-header">
-              <span class="contact-name">{{ contact.name }}</span>
-              <span class="contact-source">{{ contact.source }}</span>
+      <div class="list-container">
+        <mat-nav-list>
+          <mat-list-item 
+            *ngFor="let contact of filteredContacts" 
+            (click)="openContactForm(contact)"
+            class="list-item"
+          >
+            <div class="list-chat-container">
+              <div class="list-chat-img-container">
+                <!-- Ícone ou imagem do contato -->
+                <img src="assets/user.jpg" alt="Foto de Perfil" class="list-chat-img" />
+              </div>
+              <div class="list-chat-content">
+                <div class="list-chat-header">
+                  <span class="chat-name">{{ contact.name }}</span>
+                  <span class="chat-time">{{ contact.source }}</span>
+                </div>
+                <div class="list-chat-message">
+                  {{ contact.description }}
+                </div>
+              </div>
             </div>
-            <div class="list-contact-description">
-              {{ contact.description }}
-            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+
+    <!-- FORM DE CONTATO -->
+    <!-- Só mostra se for desktop OU (não desktop e form aberto) -->
+    <div class="contact-main" *ngIf="(isDesktop || (!isDesktop && isContactOpen)) && showForm">
+      <mat-toolbar class="contact-header" color="primary">
+        <!-- Botão de voltar (apenas no mobile) -->
+        <button *ngIf="!isDesktop" mat-icon-button (click)="closeContactForm()" class="back-button">
+          <lucide-angular [img]="ArrowLeft" class="my-icon"></lucide-angular>
+        </button>
+
+        <div class="contact-info">
+          <div class="contact-details">
+            <span class="contact-name">
+              {{ selectedContact?.name ? 'Editar Contato' : 'Adicionar Contato' }}
+            </span>
           </div>
         </div>
-      </mat-list-item>
-    </mat-nav-list>
-  </div>
 
-  <div class="contact-main" *ngIf="showForm">
-    <mat-toolbar color="primary">
-      <span>{{ selectedContact.name ? 'Editar Contato' : 'Adicionar Contato' }}</span>
-      <span class="spacer"></span>
-    </mat-toolbar>
+        <!-- Espaçador para empurrar o botão para a direita -->
+        <span class="spacer"></span>
 
-    <div class="form-area">
-      <mat-form-field appearance="outline">
-        <mat-label>Nome</mat-label>
-        <input matInput [(ngModel)]="selectedContact.name"/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Descrição</mat-label>
-        <input matInput [(ngModel)]="selectedContact.description" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Origem</mat-label>
-        <input matInput [(ngModel)]="selectedContact.source" />
-      </mat-form-field>
-
-      <div class="buttons-row">
-        <button mat-raised-button color="primary" (click)="saveContact()">
-          Salvar...
+        <!-- BOTÃO "INICIAR CONVERSA" -->
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="startConversation()"
+          [disabled]="!selectedContact?.name"
+        >
+          Iniciar Conversa
         </button>
-        <button mat-raised-button color="warn" (click)="deleteContact()">
-          Excluir
-        </button>
+      </mat-toolbar>
+
+      <div class="form-area">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput [(ngModel)]="selectedContact.name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <input matInput [(ngModel)]="selectedContact.description" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Origem</mat-label>
+          <input matInput [(ngModel)]="selectedContact.source" />
+        </mat-form-field>
+
+        <div class="buttons-row">
+          <button mat-raised-button color="primary" (click)="saveContact()">
+            Salvar
+          </button>
+          <button mat-raised-button color="warn" (click)="deleteContact()">
+            Excluir
+          </button>
+        </div>
       </div>
     </div>
   </div>

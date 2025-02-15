@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
@@ -7,17 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
-import {
-  LucideAngularModule,
-  MessageCircle,
-  CircleUserRound,
-  LayoutDashboard,
-  Settings,
-  Search,
-  Check,
-  Send,
-  ArrowLeft
-} from 'lucide-angular';
+import { LucideAngularModule, MessageCircle, CircleUserRound, LayoutDashboard, Settings, Search, Check, Send } from 'lucide-angular';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -45,7 +35,6 @@ export class ChatComponent implements OnInit {
   readonly Search = Search;
   readonly Check = Check;
   readonly Send = Send;
-  readonly ArrowLeft = ArrowLeft;
 
   searchTerm: string = '';
   filter: 'all' | 'pending' | 'resolved' = 'all';
@@ -56,24 +45,11 @@ export class ChatComponent implements OnInit {
 
   sidebarOpen = false;
 
-  // Flags para responsividade
-  isChatOpen = false; // No mobile, controla se o chat principal está aberto
-  isDesktop = true;   // True se a tela for maior que 768px
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event?: Event) {
-    this.isDesktop = window.innerWidth > 768;
-    if (this.isDesktop) {
-      // No desktop, sempre mostra ambos os painéis
-      this.isChatOpen = false;
-    }
-  }
-
+  
+  
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.onResize(); // Verifica o tamanho inicial da tela
-
     this.chatService.conversations$.subscribe((convs) => {
       this.conversations = convs;
       if (!this.currentConversation && convs.length > 0) {
@@ -105,21 +81,11 @@ export class ChatComponent implements OnInit {
     this.currentConversation = conversation;
     conversation.unreadMessages = 0;
     this.chatService.updateConversation(conversation);
-
-    // No mobile, exibe somente o chat principal
-    if (!this.isDesktop) {
-      this.isChatOpen = true;
-    }
-  }
-
-  closeChat() {
-    if (!this.isDesktop) {
-      this.isChatOpen = false;
-    }
   }
 
   sendMessage() {
     if (this.newMessage.trim()) {
+      
       this.currentConversation.messages.push({
         text: this.newMessage,
         type: 'sent'
@@ -127,9 +93,11 @@ export class ChatComponent implements OnInit {
       this.currentConversation.lastMessage = this.newMessage;
       this.chatService.updateConversation(this.currentConversation);
 
+      
       const conversationRef = this.currentConversation;
       this.newMessage = '';
 
+      
       setTimeout(() => {
         const fakeResponse = this.getFakeResponse();
         conversationRef.messages.push({
@@ -137,11 +105,12 @@ export class ChatComponent implements OnInit {
           type: 'received'
         });
         conversationRef.lastMessage = fakeResponse;
-
+        
         if (this.currentConversation.name !== conversationRef.name) {
           conversationRef.unreadMessages++;
         }
         this.chatService.updateConversation(conversationRef);
+        
         this.playNotificationSound();
       }, 1500);
     }
@@ -155,6 +124,7 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  
   getFakeResponse(): string {
     const responses = [
       'Olá, tudo bem?',
@@ -165,6 +135,7 @@ export class ChatComponent implements OnInit {
     return responses[Math.floor(Math.random() * responses.length)];
   }
 
+  
   simulateIncomingMessages() {
     setInterval(() => {
       if (this.conversations.length > 0) {
@@ -176,16 +147,18 @@ export class ChatComponent implements OnInit {
           type: 'received'
         });
         conv.lastMessage = fakeMessage;
-
+        
         if (this.currentConversation?.name !== conv.name) {
           conv.unreadMessages++;
         }
         this.chatService.updateConversation(conv);
+        
         this.playNotificationSound();
       }
-    }, 10000);
+    }, 10000); 
   }
 
+  
   playNotificationSound() {
     const audio = new Audio('assets/notification.mp3');
     audio.load();

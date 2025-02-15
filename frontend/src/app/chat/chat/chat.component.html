@@ -8,7 +8,8 @@
   <app-sidebar></app-sidebar>
 
   <div class="chat-layout">
-    <div class="conversation-list" *ngIf="isDesktop || (!isDesktop && !isChatOpen)">
+
+    <div class="conversation-list">
       <div class="list-header">
         <h2>Conversas</h2>
         <div class="list-header-input-container">
@@ -65,13 +66,9 @@
       </div>
     </div>
 
-    <!-- Chat Principal -->
-    <div class="chat-main" *ngIf="isDesktop || (!isDesktop && isChatOpen)">
+    <!-- CHAT PRINCIPAL -->
+    <div class="chat-main">
       <mat-toolbar class="chat-header" color="primary">
-        <!-- Botão de voltar (só no mobile) -->
-        <button *ngIf="!isDesktop" mat-icon-button (click)="closeChat()" class="back-button">
-          <lucide-angular [img]="ArrowLeft" class="my-icon"></lucide-angular>
-        </button>
         <div class="contact-info">
           <img src="assets/{{currentConversation.image}}" alt="Profile Picture" class="contact-avatar" />
           <div class="contact-details">
