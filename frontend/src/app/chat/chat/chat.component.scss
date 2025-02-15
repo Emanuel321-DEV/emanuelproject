@@ -1,17 +1,42 @@
-
-
 .chat-container {
   display: flex;
   flex-direction: row;
-  
   height: 100vh;
-  background-color: #f7f9fc; 
-  
+  box-sizing: border-box;
+  background-color: #f7f9fc;
+  position: relative;
+
+  .hamburger-btn {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px;
+      background-color: #333;
+      transition: 0.4s;
+    }
+  }
+
+  &.sidebar-open {
+    ::ng-deep .sidebar {
+      transform: translateX(0);
+    }
+  }
 }
 
 .chat-layout {
   display: flex;
   width: 100%;
+  box-sizing: border-box;
   height: 100%;
 }
 
@@ -33,7 +58,7 @@ app-sidebar {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 0px 25px;
+    padding: 0 25px;
 
     h2 {
       margin: 0;
@@ -48,11 +73,11 @@ app-sidebar {
       align-items: center;
       padding-left: 15px;
       background-color: white;
-      
+
       .my-icon {
         color: gray;
       }
-      
+
       .list-header-input-search {
         border: none; 
         padding: 20px;
@@ -66,7 +91,7 @@ app-sidebar {
     display: flex;
     gap: 10px;
     margin: 15px 0;
-    padding: 0px 25px;
+    padding: 0 25px;
     justify-content: space-between;
 
     button {
@@ -135,8 +160,6 @@ app-sidebar {
   .list-chat-content {
     flex: 1;
     display: flex;
-    width: 58px;
-    height: 58px;
     flex-direction: column;
     justify-content: space-around;
   }
@@ -319,37 +342,29 @@ app-sidebar {
       text-transform: none;    
       cursor: pointer;
       border: 0;
-    
-      
+      box-shadow: none !important;
+
       &:hover {
         background-color: #1976D2; 
       }
-      
-      
-      box-shadow: none !important;
       &:active,
       &:focus {
         box-shadow: none !important;
       }
     }
-    
   }
-  
 }
 
 ::-webkit-scrollbar {
   width: 8px; 
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: #e0e0e0; 
   border-radius: 4px; 
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background-color: #b3b3b3; 
 }
-
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
   border-radius: 4px;
@@ -367,4 +382,30 @@ app-sidebar {
   justify-content: center;
   border-radius: 50%;
   margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  mat-nav-list {
+    width: 97% !important;
+    .list-item {
+      height: 75px;
+      width: 100% !important;
+    }
+  }
+
+  .conversation-list {
+    width: 100% !important;
+    border-right: none;
+  }
+
+  .back-button {
+    display: inline-block;
+    background-color: transparent;
+    border: 0;
+    margin-right: 1rem;
+  }
 }
