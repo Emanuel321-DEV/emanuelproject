@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, MessageCircle, CircleUserRound, LayoutDashboard, Settings, Search } from 'lucide-angular';
+import { LucideAngularModule, MessageCircle, CircleUserRound, LayoutDashboard, Settings, Search, Check, Send } from 'lucide-angular';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -33,10 +33,10 @@ export class ChatComponent implements OnInit {
   readonly LayoutDashboard = LayoutDashboard;
   readonly Settings = Settings;
   readonly Search = Search;
+  readonly Check = Check;
+  readonly Send = Send;
 
-  
   searchTerm: string = '';
-
   filter: 'all' | 'pending' | 'resolved' = 'all';
 
   conversations: any[] = [];
@@ -52,6 +52,8 @@ export class ChatComponent implements OnInit {
         this.currentConversation = convs[0];
       }
     });
+    
+    this.simulateIncomingMessages();
   }
 
   get filteredConversations() {
@@ -75,16 +77,85 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     if (this.newMessage.trim()) {
+      
       this.currentConversation.messages.push({
         text: this.newMessage,
         type: 'sent'
       });
       this.currentConversation.lastMessage = this.newMessage;
       this.chatService.updateConversation(this.currentConversation);
+
+      
+      const conversationRef = this.currentConversation;
       this.newMessage = '';
+
+      
+      setTimeout(() => {
+        const fakeResponse = this.getFakeResponse();
+        conversationRef.messages.push({
+          text: fakeResponse,
+          type: 'received'
+        });
+        conversationRef.lastMessage = fakeResponse;
+        
+        if (this.currentConversation.name !== conversationRef.name) {
+          conversationRef.unreadMessages++;
+        }
+        this.chatService.updateConversation(conversationRef);
+        
+        this.playNotificationSound();
+      }, 1500);
     }
   }
-  onResolve() {
+
+  onResolve(currentConversation: any) {
+    if (!currentConversation.resolved) {
+      const updatedConversation = { ...currentConversation, resolved: true };
+      this.currentConversation = updatedConversation;
+      this.chatService.updateConversation(updatedConversation);
+    }
   }
 
+  
+  getFakeResponse(): string {
+    const responses = [
+      'Olá, tudo bem?',
+      'Entendi, pode continuar...',
+      'Interessante, me conte mais!',
+      'Obrigado por compartilhar! Meu amigo'
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
+
+  
+  simulateIncomingMessages() {
+    setInterval(() => {
+      if (this.conversations.length > 0) {
+        const randomIndex = Math.floor(Math.random() * this.conversations.length);
+        const conv = this.conversations[randomIndex];
+        const fakeMessage = this.getFakeResponse();
+        conv.messages.push({
+          text: fakeMessage,
+          type: 'received'
+        });
+        conv.lastMessage = fakeMessage;
+        
+        if (this.currentConversation?.name !== conv.name) {
+          conv.unreadMessages++;
+        }
+        this.chatService.updateConversation(conv);
+        
+        this.playNotificationSound();
+      }
+    }, 10000); 
+  }
+
+  
+  playNotificationSound() {
+    const audio = new Audio('assets/notification.mp3');
+    audio.load();
+    audio.play().catch(err => {
+      console.error('Erro ao tocar o som:', err);
+    });
+  }
 }

@@ -37,7 +37,7 @@
           >
             <div class="list-chat-container">
               <div class="list-chat-img-container">
-                <img src="assets/user.jpg" alt="Profile Picture" class="list-chat-img">
+                <img src="assets/{{conversation.image}}" alt="Profile Picture" class="list-chat-img">
               </div>
         
               <div class="list-chat-content">
@@ -65,10 +65,11 @@
       </div>
     </div>
     
+    
     <div class="chat-main">
       <mat-toolbar class="chat-header" color="primary">
         <div class="contact-info">
-          <img src="assets/user.jpg" alt="Profile Picture" class="contact-avatar" />
+          <img src="assets/{{currentConversation.image}}" alt="Profile Picture" class="contact-avatar" />
           <div class="contact-details">
             <span class="contact-name">{{ currentConversation?.name }}</span>
             <span class="contact-status">Online</span>
@@ -78,11 +79,13 @@
         <button
           mat-raised-button
           class="resolve-button"
-          (click)="onResolve()"
+          (click)="onResolve(currentConversation)"
+          [disabled]="currentConversation?.resolved"
         >
-          <lucide-angular [img]="MessageCircle" class="my-icon"></lucide-angular>
+          <lucide-angular [img]="Check" class="my-icon"></lucide-angular>
           Resolver
         </button>
+
 
       </mat-toolbar>
 
@@ -100,22 +103,25 @@
       </div>
 
       <div class="input-area">
+      
         <mat-form-field appearance="outline" class="chat-input">
-          <mat-label>Type your message</mat-label>
+          <mat-label>Digite sua mensagem aqui</mat-label>
           <input
             matInput
             [(ngModel)]="newMessage"
             (keyup.enter)="sendMessage()"
           />
         </mat-form-field>
+      
         <button
-          mat-icon-button
+          mat-raised-button
           color="primary"
-          (click)="sendMessage()"
           class="send-button"
+          (click)="sendMessage()"
         >
-          <lucide-angular [img]="MessageCircle" class="my-icon"></lucide-angular>
+          Enviar  <lucide-angular [img]="Send" class="my-icon"></lucide-angular>
         </button>
+
       </div>
     </div>
   </div>

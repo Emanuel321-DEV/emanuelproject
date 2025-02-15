@@ -1,8 +1,12 @@
+
+
 .chat-container {
   display: flex;
   flex-direction: row;
+  
   height: 100vh;
   background-color: #f7f9fc; 
+  
 }
 
 .chat-layout {
@@ -18,9 +22,9 @@ app-sidebar {
 
 .conversation-list {
   width: 320px;
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
-  padding: 25px 0px;
+  padding: 25px 0;
   border-right: 1px solid #e3e3e3;
   display: flex;
   flex-direction: column;
@@ -81,16 +85,16 @@ app-sidebar {
   }
   
   .list-container {
-    height: 100%;
+    flex: 1;
     overflow-y: auto;
     padding: 0 21px;
+
     mat-nav-list {
       display: flex;
       flex-direction: column;
       padding-top: 0;
       gap: 6px;
       width: 100%;
-      
       
       .list-item {
         border-radius: 0 !important;
@@ -103,7 +107,6 @@ app-sidebar {
         }
       }
     }
-
   }
 
   .list-chat-container {
@@ -112,8 +115,6 @@ app-sidebar {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    
-    
   }
 
   .list-chat-img-container {
@@ -159,7 +160,6 @@ app-sidebar {
 
   .list-chat-message {
     display: flex;
-
     font-size: 0.85rem;
     color: #666;
     white-space: nowrap;
@@ -174,6 +174,7 @@ app-sidebar {
   flex-direction: column;
   background-color: #f7f9fc;
   overflow: hidden;
+  padding: 0 0 8px 0;
   
   .chat-header {
     background-color: #ffffff !important; 
@@ -191,8 +192,10 @@ app-sidebar {
 
       .contact-avatar {
         height: 100%;  
+        width: 50px;
         border-radius: 50%;
         margin-right: 12px;
+        object-fit: cover;
       }
 
       .contact-details {
@@ -218,8 +221,29 @@ app-sidebar {
       flex: 1;
     }
 
-    button {
-      color: #999;
+    .resolve-button {
+      background-color: #11C44D; 
+      color: #fff;
+      font-weight: 600;
+      border-radius: 5px; 
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .resolve-button:hover {
+      background-color: #0da83f;
+    }
+
+    .resolve-button[disabled],
+    .resolve-button.mat-button-disabled:hover {
+      box-shadow: none !important;
+      opacity: 0.3;
+      cursor: not-allowed !important;
     }
   }
 
@@ -233,7 +257,6 @@ app-sidebar {
   .message {
     margin: 0.5rem 0;
     display: flex;
-    // Message bubble styling
     .content {
       padding: 0.75rem 1rem;
       border-radius: 18px;
@@ -264,39 +287,54 @@ app-sidebar {
   .input-area {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem;
+    height: 56px;
     border-top: 1px solid #e3e3e3;
-    background-color: #ffffff;
-  }
-
-  .chat-input {
-    flex: 1;
-    margin-right: 8px;
+    gap: 8px;
+    padding: 10px 10px 0 10px;
+  
+    .chat-input {
+      flex: 1;
+      height: 100%;
+  
+      .mat-form-field-wrapper,
+      .mat-form-field-flex,
+      .mat-form-field-infix {
+        height: 100%;
+        align-items: center; 
+        padding: 0 !important; 
+      }
+    }
+  
+    .send-button {
+      background-color: #2196F3; 
+      color: #fff;              
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;                 
+      padding: 0 1rem;
+      height: 100%;            
+      border-radius: 4px;      
+      font-weight: 500;        
+      text-transform: none;    
+      cursor: pointer;
+      border: 0;
     
-    mat-label,
-    mat-hint,
-    mat-placeholder {
-      color: #666 !important;
+      
+      &:hover {
+        background-color: #1976D2; 
+      }
+      
+      
+      box-shadow: none !important;
+      &:active,
+      &:focus {
+        box-shadow: none !important;
+      }
     }
-
-    .mat-form-field-outline {
-      stroke: #ccc;
-    }
+    
   }
-
-  .send-button {
-    background-color: #1976d2; 
-    color: #fff;
-
-    &:hover {
-      background-color: #1565c0;
-    }
-
-    .my-icon {
-      width: 20px;
-      height: 20px;
-    }
-  }
+  
 }
 
 ::-webkit-scrollbar {
@@ -318,7 +356,7 @@ app-sidebar {
 }
 
 .list-chat-message-badge {
-  background-color: red;
+  background-color: #4caf50;
   color: white;
   font-size: 10px;
   font-weight: bold;
@@ -329,24 +367,4 @@ app-sidebar {
   justify-content: center;
   border-radius: 50%;
   margin-left: auto;
-}
-
-
-.resolve-button {
-  background-color: #11C44D; 
-  border: none;
-  padding: 5px;
-  box-sizing: border-box;
-  color: white;              
-  font-weight: 600;         
-  border-radius: 4px;       
-  
-  cursor: pointer;
-  &:hover {
-    background-color: #0da83f; 
-  }
-
-  .my-icon {
-    margin-right: 8px;  
-  }
 }

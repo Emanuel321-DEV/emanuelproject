@@ -7,29 +7,40 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ChatService {
   private conversationsSource = new BehaviorSubject<any[]>([
     {
-      name: 'João Carlos',
-      lastMessage: 'Estou bem e você ?',
+      name: 'John Snow',
+      lastMessage: 'Acho melhor não ...',
       resolved: true,
+      image: "jon.jpg",
       unreadMessages: 3,
       messages: [
-        { text: 'Hi, I am fine!', type: 'sent' },
-        { text: 'Estou bem e você ?', type: 'received' }
+        { text: 'Como está John Snow ?', type: 'sent' },
+        { text: 'Estou bem, vou me casar com Daenarys', type: 'received' },
+        { text: 'Acho melhor não ...', type: 'sent' },
       ]
     },
     {
-      name: 'Maria Antônia',
-      lastMessage: 'Great!',
+      name: 'Arya Stark',
+      lastMessage: 'Qual o problema ?!',
       resolved: false,
+      image: "arya.jpg",
       unreadMessages: 2,
       messages: [
-        { text: 'Any updates?', type: 'received' },
-        { text: 'Yes, several!', type: 'sent' }
+        { text: 'Oi Arya, como está ?', type: 'sent' },
+        { text: 'Estou bem!', type: 'received' },
+        { text: 'Estou vendo minha família, estão em um casamento', type: 'received' },
+        { text: 'Casamento ?', type: 'sent' },
+        { text: 'Sim, na casa Frey!', type: 'received' },
+        { text: 'Meu Deus...', type: 'sent' },
+        { text: 'O que foi ?!', type: 'received' },
+        { text: 'Qual o problema ?!', type: 'received' },
       ]
+
     },
     {
-      name: 'João Carlos',
+      name: 'Cersei Lennister',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "cersei-lennister.jpg",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -38,9 +49,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Joffrey Barath...',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "joffrey.png",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -49,9 +61,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Jorah Mormont',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "jorah.jpg",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -60,9 +73,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Little Finger',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "little-finger.jpg",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -71,9 +85,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Loras Tyrell',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "loras.webp",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -82,9 +97,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Ned Stark',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "ned-stark.jpg",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -93,9 +109,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Sansa Stark',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "sansa.jpg",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -104,9 +121,10 @@ export class ChatService {
     },
 
     {
-      name: 'João Carlos',
+      name: 'Tyrion Lennister',
       lastMessage: 'Estou bem e você ?',
       resolved: true,
+      image: "tiryon-lannister.png",
       unreadMessages: 3,
       messages: [
         { text: 'Hi, I am fine!', type: 'sent' },
@@ -157,13 +175,10 @@ export class ChatService {
   
   updateConversation(updatedConversation: any): void {
     const currentConversations = this.getConversations();
-    const index = currentConversations.findIndex(
-      conv => conv.name === updatedConversation.name
+    const updatedConversations = currentConversations.map(conv =>
+      conv.name === updatedConversation.name ? updatedConversation : conv
     );
-    if (index !== -1) {
-      currentConversations[index] = updatedConversation;
-      this.setConversations(currentConversations);
-    }
+    this.setConversations(updatedConversations);
   }
   
   receiveMessage(index: number, text: string) {
