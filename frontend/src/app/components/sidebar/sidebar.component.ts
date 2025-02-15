@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component';
+import { ChatService } from '../../chat/chat/chat.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,26 +18,23 @@ export class SidebarComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private chatService: ChatService
   ) {}
 
   readonly MessageCircle  = MessageCircle ;
   readonly CircleUserRound   = UserPen  ;
   readonly LayoutDashboard   = Moon  ;
   readonly LogOut   = LogOut  ;
+  unreadMessages = 0;
   
-  unreadMessages = 3;
 
   ngOnInit() {
-    this.getUnreadMessages();
+    this.chatService.getUnreadMessagesCount().subscribe(count => {
+      this.unreadMessages = count;
+    });
   }
   
-  getUnreadMessages() {
-    setTimeout(() => {
-      this.unreadMessages = Math.floor(Math.random() * 10); 
-    }, 1000);
-  }
-
   confirmLogout(event: Event): void {
     event.preventDefault();
 

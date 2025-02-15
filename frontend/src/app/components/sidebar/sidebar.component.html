@@ -3,7 +3,7 @@
       <ul>
         <li class="profile-link link-hover notification-container">
           <a routerLink="/chat" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular></a>
-          <span class="notification-badge" *ngIf="unreadMessages > 0">60</span>
+          <span class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</span>
         </li>
         <li class="profile-link link-hover">
           <a routerLink="/contact" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="CircleUserRound  " class="my-icon"></lucide-angular></a>
