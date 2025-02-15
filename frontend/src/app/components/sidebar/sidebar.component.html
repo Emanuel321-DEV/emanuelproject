@@ -1,27 +1,41 @@
 <aside class="sidebar">
-    <nav>
-      <ul>
-        <li class="profile-link link-hover notification-container">
-          <a routerLink="/chat" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="MessageCircle " class="my-icon"></lucide-angular></a>
-          <span class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</span>
-        </li>
-        <li class="profile-link link-hover">
-          <a routerLink="/contact" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="CircleUserRound  " class="my-icon"></lucide-angular></a>
-        </li>
-        <li class="profile-link link-hover">
-          <a routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><lucide-angular [img]="LayoutDashboard " class="my-icon"></lucide-angular></a>
-        </li>
-      </ul>
-    </nav>
-    <div class="bottom-section">
-      <ul>
-        <li class="profile-link link-hover">
-          <a href="#" (click)="confirmLogout($event)">
-            <lucide-angular [img]="LogOut"></lucide-angular>
-          </a>
-        </li>
-        <li class="profile-link"><a routerLink="/profile" ><img src="assets/user.jpg" alt="Foto de Perfil" class="my-icon profile-photo"></a></li>
-      </ul>
-    </div>
-  </aside>
-  
+  <nav>
+    <ul>
+      <li class="profile-link link-hover notification-container">
+        <a routerLink="/chat" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <lucide-angular [img]="MessageCircle" class="my-icon"></lucide-angular>
+        </a>
+        <span class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</span>
+      </li>
+      <li class="profile-link link-hover">
+        <a routerLink="/contact" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <lucide-angular [img]="CircleUserRound" class="my-icon"></lucide-angular>
+        </a>
+      </li>
+      <li class="profile-link link-hover" *ngIf="authService.isAdmin()">
+        <a routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          <lucide-angular [img]="LayoutDashboard" class="my-icon"></lucide-angular>
+        </a>
+      </li>
+      <!-- <li class="profile-link link-hover">
+        <a>
+          <lucide-angular [img]="Moon" class="my-icon"></lucide-angular>
+        </a>
+      </li> -->
+    </ul>
+  </nav>
+  <div class="bottom-section">
+    <ul>
+      <li class="profile-link link-hover">
+        <a href="#" (click)="confirmLogout($event)">
+          <lucide-angular [img]="LogOut"></lucide-angular>
+        </a>
+      </li>
+      <li class="profile-link">
+        <a routerLink="/profile">
+          <img src="assets/user.jpg" alt="Foto de Perfil" class="my-icon profile-photo">
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

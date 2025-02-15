@@ -9,11 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 
-// Sidebar e ChatService (ajuste import conforme sua estrutura)
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
 import { ChatService } from '../chat/chat/chat.service';
 
-// Ícones Lucide
 import {
   LucideAngularModule,
   MessageCircle,
@@ -53,7 +51,6 @@ export class ContactComponent implements OnInit {
   readonly Search = Search;
   readonly ArrowLeft = ArrowLeft;
 
-  // Lista de contatos (exemplo)
   contacts: any[] = [
     {
       name: 'Warehouse 11',
@@ -65,17 +62,13 @@ export class ContactComponent implements OnInit {
       description: 'cayo@gmail.com',
       source: 'Gmail'
     },
-    // ...adicione mais se quiser
   ];
 
-  // Termo de pesquisa
   searchTerm: string = '';
 
-  // Controle de formulário
   showForm: boolean = false;
   selectedContact: any = null;
 
-  // Flags de responsividade (semelhantes ao Chat)
   isDesktop = true;      // se a largura da janela > 768px
   isContactOpen = false; // no mobile, indica se o formulário (detalhes) está aberto
 

@@ -1,0 +1,75 @@
+<div class="chat-container" [class.sidebar-open]="sidebarOpen">
+  <button class="hamburger-btn" (click)="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <app-sidebar></app-sidebar>
+
+  <div class="chat-layout">
+
+    <!-- Sidebar com as opções do dashboard -->
+    <div class="conversation-list">
+      <div class="list-header">
+        <h2>Dashboard</h2>
+      </div>
+
+      <div class="list-container">
+        <mat-nav-list>
+          <mat-list-item class="list-item" (click)="selectOption(1)" [class.active]="selectedOption === 1">
+            <div class="list-chat-container">
+              Opção1
+            </div>
+          </mat-list-item>
+          <mat-list-item class="list-item" (click)="selectOption(2)" [class.active]="selectedOption === 2">
+            <div class="list-chat-container">
+              Opção2
+            </div>
+          </mat-list-item>
+          <mat-list-item class="list-item" (click)="selectOption(3)" [class.active]="selectedOption === 3">
+            <div class="list-chat-container">
+              Opção3
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+
+    <div class="chat-main">
+      <mat-toolbar class="chat-header" color="primary">
+        <div class="contact-info">
+          <span class="contact-name">Dashboard - Opção {{selectedOption}}</span>
+          <div class="contact-details">
+            <span class="contact-status">Online</span>
+          </div>
+        </div>
+        <span class="spacer"></span>
+      </mat-toolbar>
+
+      <div class="messages-area">
+        <div *ngIf="selectedOption === 1">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [options]="pieChartOptions"
+                  chartType="pie">
+          </canvas>
+        </div>
+        <div *ngIf="selectedOption === 2">
+          <canvas baseChart
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  chartType="bar">
+          </canvas>
+        </div>
+        <div *ngIf="selectedOption === 3">
+          <canvas baseChart
+                  [data]="unreadBarChartData"
+                  [options]="unreadBarChartOptions"
+                  chartType="bar">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
