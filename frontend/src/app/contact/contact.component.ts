@@ -69,8 +69,8 @@ export class ContactComponent implements OnInit {
   showForm: boolean = false;
   selectedContact: any = null;
 
-  isDesktop = true;      
-  isContactOpen = false; 
+  isDesktop = true;
+  isContactOpen = false;
   sidebarOpen: boolean = false;
 
   constructor(

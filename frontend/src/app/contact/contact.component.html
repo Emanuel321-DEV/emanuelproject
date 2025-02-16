@@ -8,7 +8,6 @@
   <app-sidebar></app-sidebar>
 
   <div class="contact-layout">
-    <!-- LISTA DE CONTATOS -->
     <div class="conversation-list" *ngIf="isDesktop || (!isDesktop && !isContactOpen)">
       <div class="list-header">
         <div class="header-top">
@@ -19,9 +18,9 @@
         </div>
         <div class="list-header-input-container">
           <lucide-angular [img]="Search" class="my-icon"></lucide-angular>
-          <input 
-            matInput 
-            placeholder="Pesquisar..." 
+          <input
+            matInput
+            placeholder="Pesquisar..."
             class="list-header-input-search"
             [(ngModel)]="searchTerm"
           />
@@ -30,8 +29,8 @@
 
       <div class="list-container">
         <mat-nav-list>
-          <mat-list-item 
-            *ngFor="let contact of filteredContacts" 
+          <mat-list-item
+            *ngFor="let contact of filteredContacts"
             (click)="openContactForm(contact)"
             class="list-item"
           >
@@ -54,13 +53,12 @@
       </div>
     </div>
 
-    <!-- FORMULÁRIO DE CONTATO -->
     <div class="contact-main" *ngIf="(isDesktop || (!isDesktop && isContactOpen)) && showForm">
-      <mat-toolbar class="contact-header" color="primary">
-        <button 
-          *ngIf="!isDesktop" 
-          mat-icon-button 
-          (click)="closeContactForm()" 
+      <mat-toolbar class="contact-header">
+        <button
+          *ngIf="!isDesktop"
+          mat-icon-button
+          (click)="closeContactForm()"
           class="back-button"
         >
           <lucide-angular [img]="ArrowLeft" class="my-icon"></lucide-angular>
@@ -75,10 +73,9 @@
         </div>
 
         <span class="spacer"></span>
-
         <button
           mat-raised-button
-          color="primary"
+          class="app-button green"
           (click)="startConversation()"
           [disabled]="!selectedContact?.name"
         >
@@ -103,11 +100,16 @@
         </mat-form-field>
 
         <div class="buttons-row">
-          <button mat-raised-button color="primary" (click)="saveContact()">
+          <button mat-raised-button class="app-button blue" (click)="saveContact()">
             Salvar
           </button>
-          <button mat-raised-button color="warn" (click)="deleteContact()">
+
+          <button mat-raised-button class="app-button red" (click)="deleteContact()">
             Excluir
+          </button>
+
+          <button mat-raised-button class="app-button gray" (click)="closeContactForm()">
+            Cancelar
           </button>
         </div>
       </div>

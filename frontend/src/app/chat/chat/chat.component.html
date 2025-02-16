@@ -1,16 +1,13 @@
 <div class="chat-container" [class.sidebar-open]="sidebarOpen">
-  <!-- Botão hamburger para sidebar (desktop/mobile) -->
   <button class="hamburger-btn" (click)="toggleSidebar()">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
-  <!-- Sidebar (componente separado) -->
   <app-sidebar></app-sidebar>
 
   <div class="chat-layout">
-    <!-- LISTA DE CONVERSAS -->
     <div class="conversation-list" *ngIf="!isMobileView || (isMobileView && !showChat)">
       <div class="list-header">
         <h2>Conversas</h2>
@@ -69,11 +66,9 @@
       </div>
     </div>
 
-    <!-- CHAT PRINCIPAL -->
     <div class="chat-main" *ngIf="!isMobileView || (isMobileView && showChat)">
       <mat-toolbar class="chat-header" color="primary">
         <div class="contact-info">
-          <!-- Botão de voltar (seta) para mobile -->
           <button 
             class="back-button" 
             *ngIf="isMobileView" 
