@@ -145,22 +145,20 @@ export class ContactComponent implements OnInit {
   startConversation() {
     if (!this.selectedContact) return;
 
-    const existingConv = this.chatService
-      .getConversations()
-      .find(conv => conv.name === this.selectedContact.name);
+    let conversations = this.chatService.getConversations();
+    let conversation = conversations.find(conv => conv.name === this.selectedContact.name);
 
-    if (!existingConv) {
-      const newConv = {
+    if (!conversation) {
+      conversation = {
         name: this.selectedContact.name,
         lastMessage: '',
         resolved: false,
-        image: 'default-user.png',
+        image: 'user.jpg',
         unreadMessages: 0,
         messages: []
       };
-      const all = this.chatService.getConversations();
-      all.push(newConv);
-      this.chatService.setConversations(all);
+      conversations.push(conversation);
+      this.chatService.setConversations(conversations);
     }
 
     this.router.navigate(['/chat'], {

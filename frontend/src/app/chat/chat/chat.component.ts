@@ -7,16 +7,17 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
-import { 
-  LucideAngularModule, 
-  MessageCircle, 
-  CircleUserRound, 
-  LayoutDashboard, 
-  Settings, 
-  Search, 
-  Check, 
-  Send, 
-  ArrowLeft 
+import { ActivatedRoute } from '@angular/router';
+import {
+  LucideAngularModule,
+  MessageCircle,
+  CircleUserRound,
+  LayoutDashboard,
+  Settings,
+  Search,
+  Check,
+  Send,
+  ArrowLeft
 } from 'lucide-angular';
 import { MatInputModule } from '@angular/material/input';
 
@@ -58,13 +59,33 @@ export class ChatComponent implements OnInit {
   isMobileView = false;
   showChat = false;
 
-  constructor(private chatService: ChatService) {}
+  contactName: string | null = null;
+
+  constructor(
+    private chatService: ChatService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.contactName = params['contactName'] || null;
+    });
+
     this.chatService.conversations$.subscribe((convs) => {
       this.conversations = convs;
       if (!this.currentConversation && convs.length > 0) {
-        this.currentConversation = convs[0];
+        if (this.contactName) {
+          const conv = convs.find(c =>
+            c.name.toLowerCase() === this.contactName!.toLowerCase()
+          );
+          if (conv) {
+            this.openChat(conv);
+          } else {
+            this.currentConversation = convs[0];
+          }
+        } else {
+          this.currentConversation = convs[0];
+        }
       }
     });
     this.checkIfMobile();
