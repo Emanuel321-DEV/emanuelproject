@@ -86,33 +86,80 @@
       <div class="form-area">
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput [(ngModel)]="selectedContact!.name" />
+          <input
+            matInput
+            required
+            [(ngModel)]="selectedContact!.name"
+            name="name"
+            #nameInput="ngModel"
+          />
+          <mat-error *ngIf="nameInput.invalid && nameInput.touched">
+            O nome é obrigatório.
+          </mat-error>
         </mat-form-field>
-
+      
         <mat-form-field appearance="outline">
           <mat-label>Telefone</mat-label>
-          <input matInput [(ngModel)]="selectedContact!.phone" />
+          <input
+            matInput
+            required
+            [(ngModel)]="selectedContact!.phone"
+            name="phone"
+            #phoneInput="ngModel"
+          />
+          <mat-error *ngIf="phoneInput.invalid && phoneInput.touched">
+            O telefone é obrigatório.
+          </mat-error>
         </mat-form-field>
-
+      
         <mat-form-field appearance="outline">
           <mat-label>Origem</mat-label>
-          <input matInput [(ngModel)]="selectedContact!.source" />
+          <input
+            matInput
+            required
+            [(ngModel)]="selectedContact!.source"
+            placeholder="Telegram, WhatsApp, Email"
+            name="source"
+            #sourceInput="ngModel"
+          />
+          <mat-error *ngIf="sourceInput.invalid && sourceInput.touched">
+            A origem é obrigatória.
+          </mat-error>
         </mat-form-field>
-
+      
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <textarea
+            matInput
+            required
+            [(ngModel)]="selectedContact!.description"
+            name="description"
+            #descInput="ngModel"
+            placeholder="Informe a descrição"
+          ></textarea>
+          <mat-error *ngIf="descInput.invalid && descInput.touched">
+            A descrição é obrigatória.
+          </mat-error>
+        </mat-form-field>
+      
         <div class="buttons-row">
-          <button mat-raised-button class="app-button blue" (click)="saveContact()">
+          <button
+            mat-raised-button
+            class="app-button blue"
+            (click)="saveContact()"
+            [disabled]="!selectedContact?.name || !selectedContact?.phone || !selectedContact?.source || !selectedContact?.description"
+          >
             Salvar
           </button>
-
           <button mat-raised-button class="app-button red" (click)="deleteContact()">
             Excluir
           </button>
-
           <button mat-raised-button class="app-button gray" (click)="closeContactForm()">
             Cancelar
           </button>
         </div>
       </div>
+      
     </div>
   </div>
 </div>
