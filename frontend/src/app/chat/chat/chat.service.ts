@@ -9,7 +9,7 @@ export class ChatService {
     {
       name: 'John Snow',
       lastMessage: 'Acho melhor não ...',
-      resolved: true,
+      resolved: false,
       image: "jon.jpg",
       unreadMessages: 3,
       messages: [
@@ -34,12 +34,11 @@ export class ChatService {
         { text: 'O que foi ?!', type: 'received' },
         { text: 'Qual o problema ?!', type: 'received' },
       ]
-
     },
     {
       name: 'Cersei Lennister',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "cersei-lennister.jpg",
       unreadMessages: 3,
       messages: [
@@ -47,11 +46,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Joffrey Barath...',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "joffrey.png",
       unreadMessages: 3,
       messages: [
@@ -59,11 +57,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Jorah Mormont',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "jorah.jpg",
       unreadMessages: 3,
       messages: [
@@ -71,11 +68,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Little Finger',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "little-finger.jpg",
       unreadMessages: 3,
       messages: [
@@ -83,11 +79,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Loras Tyrell',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "loras.webp",
       unreadMessages: 3,
       messages: [
@@ -95,11 +90,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Ned Stark',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "ned-stark.jpg",
       unreadMessages: 3,
       messages: [
@@ -107,11 +101,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Sansa Stark',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "sansa.jpg",
       unreadMessages: 3,
       messages: [
@@ -119,11 +112,10 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
     {
       name: 'Tyrion Lennister',
       lastMessage: 'Estou bem e você ?',
-      resolved: true,
+      resolved: false,
       image: "tiryon-lannister.png",
       unreadMessages: 3,
       messages: [
@@ -131,7 +123,6 @@ export class ChatService {
         { text: 'Estou bem e você ?', type: 'received' }
       ]
     },
-
   ]);
 
   private unreadCount = new BehaviorSubject<number>(0);
@@ -141,7 +132,6 @@ export class ChatService {
   constructor() {
     this.unreadCount.next(this.getTotalUnreadMessages());
   }
-
   
   getConversations(): any[] {
     return this.conversationsSource.value;
@@ -151,7 +141,6 @@ export class ChatService {
     this.conversationsSource.next(newConversations);
     this.unreadCount.next(this.getTotalUnreadMessages());
   }
-
   
   getTotalUnreadMessages(): number {
     return this.conversationsSource.value.reduce(
@@ -159,19 +148,16 @@ export class ChatService {
       0
     );
   }
-
   
   getUnreadMessagesCount(): Observable<number> {
     return this.unreadCount.asObservable();
   }
-
   
   openConversation(index: number) {
     const updated = this.getConversations();
     updated[index].unreadMessages = 0;
     this.setConversations(updated);
   }
-
   
   updateConversation(updatedConversation: any): void {
     const currentConversations = this.getConversations();

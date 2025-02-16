@@ -141,6 +141,7 @@ app-sidebar {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
+    min-width: 0;
   }
 
   .list-chat-img-container {
@@ -163,23 +164,32 @@ app-sidebar {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    min-width: 0;
   }
 
   .list-chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+    width: 100%;
 
-  .chat-name {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #333;
-  }
+    .chat-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-right: 8px;
+      max-width: 150px;
+    }
 
-  .chat-time {
-    font-size: 0.8rem;
-    color: #999;
+    .chat-time {
+      font-size: 0.8rem;
+      color: #999;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
   }
 
   .list-chat-message {
@@ -314,6 +324,18 @@ app-sidebar {
       background-color: #ffffff;
       color: #333;
       border-top-left-radius: 0;
+    }
+  }
+
+  .system {
+    justify-content: center;
+
+    .content {
+      background-color: #f9e79f;
+      color: #333;
+      border-radius: 10px;
+      font-style: italic;
+      max-width: 80%;
     }
   }
 

@@ -156,6 +156,12 @@ export class ChatComponent implements OnInit {
   onResolve(currentConversation: any) {
     if (!currentConversation.resolved) {
       const updatedConversation = { ...currentConversation, resolved: true };
+      updatedConversation.messages.push({
+        text: 'O chat foi finalizado com sucesso',
+        type: 'system'
+      });
+      updatedConversation.lastMessage = 'O chat foi finalizado com sucesso';
+
       this.currentConversation = updatedConversation;
       this.chatService.updateConversation(updatedConversation);
     }
@@ -177,6 +183,11 @@ export class ChatComponent implements OnInit {
         const randomIndex = Math.floor(Math.random() * this.conversations.length);
         const conv = this.conversations[randomIndex];
         const fakeMessage = this.getFakeResponse();
+        
+        if (conv.resolved) {
+          conv.resolved = false;
+        }
+        
         conv.messages.push({
           text: fakeMessage,
           type: 'received'

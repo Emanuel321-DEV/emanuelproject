@@ -93,7 +93,7 @@
           [disabled]="currentConversation?.resolved"
         >
           <lucide-angular [img]="Check" class="my-icon"></lucide-angular>
-          Resolver
+          Finalizar
         </button>
       </mat-toolbar>
 
@@ -103,7 +103,8 @@
           *ngFor="let msg of currentConversation?.messages"
           [ngClass]="{
             'sent': msg.type==='sent',
-            'received': msg.type==='received'
+            'received': msg.type==='received',
+            'system': msg.type==='system'
           }"
         >
           <div class="content">{{ msg.text }}</div>
