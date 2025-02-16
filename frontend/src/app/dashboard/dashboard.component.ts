@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideAngularModule, ArrowLeft } from 'lucide-angular';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { ChatService } from '../chat/chat/chat.service';
 
@@ -28,8 +28,19 @@ import { ChatService } from '../chat/chat/chat.service';
 })
 export class DashboardComponent implements OnInit {
   selectedOption: number = 1;
-  conversations: any[] = [];
   sidebarOpen = false;
+  conversations: any[] = [];
+
+  optionLabels: { [key: number]: string } = {
+    1: 'Visão Geral',
+    2: 'Usuários Frequentes',
+    3: 'Mensagens não lidas'
+  };
+
+  isDesktop: boolean = window.innerWidth > 768;
+  showDashboardMain: boolean = this.isDesktop;
+
+  readonly ArrowLeft = ArrowLeft;
 
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -37,7 +48,7 @@ export class DashboardComponent implements OnInit {
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: ['Pendentes', 'Resolvidas'],
     datasets: [{
-      data: [0, 0],
+      data: [0, 0], label: 'Visão Geral',
       backgroundColor: ['#ff9800', '#4caf50'],
     }]
   };
@@ -71,26 +82,40 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isDesktop = event.target.innerWidth > 768;
+    if (this.isDesktop) {
+      this.showDashboardMain = true;
+    } else {
+      this.showDashboardMain = false;
+    }
+  }
+
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
   selectOption(option: number) {
     this.selectedOption = option;
+    if (!this.isDesktop) {
+      this.showDashboardMain = true;
+    }
+  }
+
+  backToList() {
+    this.showDashboardMain = false;
   }
 
   updateCharts() {
     if (this.conversations) {
-      // Para o gráfico de pizza (Opção 1)
       const pending = this.conversations.filter(c => !c.resolved).length;
       const resolved = this.conversations.filter(c => c.resolved).length;
       this.pieChartData.datasets[0].data = [pending, resolved];
 
-      // Para o gráfico de barras (Opção 2): número de mensagens por conversa
       this.barChartData.labels = this.conversations.map(c => c.name);
       this.barChartData.datasets[0].data = this.conversations.map(c => c.messages.length);
 
-      // Para o gráfico de barras (Opção 3): quantidade de mensagens não lidas
       this.unreadBarChartData.labels = this.conversations.map(c => c.name);
       this.unreadBarChartData.datasets[0].data = this.conversations.map(c => c.unreadMessages);
     }
