@@ -79,11 +79,11 @@ export class ContactComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onResize(); 
+    this.onResize();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event?: Event) {
+  onResize() {
     this.isDesktop = window.innerWidth > 768;
     if (this.isDesktop) {
       this.isContactOpen = false;
@@ -94,7 +94,6 @@ export class ContactComponent implements OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-  
   get filteredContacts() {
     const term = this.searchTerm.toLowerCase();
     return this.contacts.filter(contact =>
@@ -143,22 +142,19 @@ export class ContactComponent implements OnInit {
     }
   }
 
-  
   startConversation() {
     if (!this.selectedContact) return;
 
-    
     const existingConv = this.chatService
       .getConversations()
       .find(conv => conv.name === this.selectedContact.name);
 
-    
     if (!existingConv) {
       const newConv = {
         name: this.selectedContact.name,
         lastMessage: '',
         resolved: false,
-        image: 'default-user.png', 
+        image: 'default-user.png',
         unreadMessages: 0,
         messages: []
       };
@@ -167,7 +163,6 @@ export class ContactComponent implements OnInit {
       this.chatService.setConversations(all);
     }
 
-    
     this.router.navigate(['/chat'], {
       queryParams: { contactName: this.selectedContact.name }
     });

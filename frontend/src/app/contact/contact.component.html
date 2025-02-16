@@ -1,15 +1,14 @@
 <div class="contact-container" [class.sidebar-open]="sidebarOpen">
-  
   <button class="hamburger-btn" (click)="toggleSidebar()">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
-  
   <app-sidebar></app-sidebar>
 
   <div class="contact-layout">
+    <!-- LISTA DE CONTATOS -->
     <div class="conversation-list" *ngIf="isDesktop || (!isDesktop && !isContactOpen)">
       <div class="list-header">
         <div class="header-top">
@@ -22,7 +21,7 @@
           <lucide-angular [img]="Search" class="my-icon"></lucide-angular>
           <input 
             matInput 
-            placeholder="Pesquisar contatos..."
+            placeholder="Pesquisar..." 
             class="list-header-input-search"
             [(ngModel)]="searchTerm"
           />
@@ -38,7 +37,6 @@
           >
             <div class="list-chat-container">
               <div class="list-chat-img-container">
-                
                 <img src="assets/user.jpg" alt="Foto de Perfil" class="list-chat-img" />
               </div>
               <div class="list-chat-content">
@@ -56,12 +54,15 @@
       </div>
     </div>
 
-    
-    
+    <!-- FORMULÁRIO DE CONTATO -->
     <div class="contact-main" *ngIf="(isDesktop || (!isDesktop && isContactOpen)) && showForm">
       <mat-toolbar class="contact-header" color="primary">
-        
-        <button *ngIf="!isDesktop" mat-icon-button (click)="closeContactForm()" class="back-button">
+        <button 
+          *ngIf="!isDesktop" 
+          mat-icon-button 
+          (click)="closeContactForm()" 
+          class="back-button"
+        >
           <lucide-angular [img]="ArrowLeft" class="my-icon"></lucide-angular>
         </button>
 
@@ -73,10 +74,8 @@
           </div>
         </div>
 
-        
         <span class="spacer"></span>
 
-        
         <button
           mat-raised-button
           color="primary"

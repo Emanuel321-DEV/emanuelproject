@@ -38,7 +38,6 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  // Ícones
   readonly MessageCircle = MessageCircle;
   readonly CircleUserRound = CircleUserRound;
   readonly LayoutDashboard = LayoutDashboard;
