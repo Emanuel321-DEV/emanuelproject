@@ -9,6 +9,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'chat', component: ChatComponent, canActivate: [authGuard] },
     { path: 'contact', component: ContactComponent, canActivate: [authGuard] },
-    { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], data: { data: { requiresAdmin: true } } },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], data: { requiresAdmin: true } },
     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

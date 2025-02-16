@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export interface JwtPayload {
   sub: string;
   email: string;
-  role: string;
+  isAdmin: boolean;
   exp: number;
   iat: number;
 }
@@ -44,7 +44,7 @@ export class AuthService {
     if (!token) return false;
     try {
       const decoded = jwtDecode<JwtPayload>(token);
-      return decoded.role === 'admin';
+      return decoded.isAdmin === true;
     } catch (err) {
       console.error('Erro ao decodificar o token', err);
       return false;

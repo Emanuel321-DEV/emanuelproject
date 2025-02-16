@@ -17,16 +17,15 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent {
+  readonly Phone  = Headset;
+  
   email = '';
   password = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  readonly Phone  = Headset;
-
   onLogin() {
     this.authService.login(this.email, this.password).subscribe(response => {
-      console.log(response);
       if (response.access_token) {
         localStorage.setItem('token', response.access_token);
         this.router.navigate(['/chat']);
