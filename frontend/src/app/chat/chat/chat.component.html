@@ -1,15 +1,17 @@
 <div class="chat-container" [class.sidebar-open]="sidebarOpen">
+  <!-- Botão hamburger para sidebar (desktop/mobile) -->
   <button class="hamburger-btn" (click)="toggleSidebar()">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
+  <!-- Sidebar (componente separado) -->
   <app-sidebar></app-sidebar>
 
   <div class="chat-layout">
-
-    <div class="conversation-list">
+    <!-- LISTA DE CONVERSAS -->
+    <div class="conversation-list" *ngIf="!isMobileView || (isMobileView && !showChat)">
       <div class="list-header">
         <h2>Conversas</h2>
         <div class="list-header-input-container">
@@ -24,15 +26,9 @@
       </div>
 
       <div class="filter-buttons">
-        <button mat-button (click)="filter = 'all'" [class.active]="filter === 'all'">
-          Todas
-        </button>
-        <button mat-button (click)="filter = 'pending'" [class.active]="filter === 'pending'">
-          Pendentes
-        </button>
-        <button mat-button (click)="filter = 'resolved'" [class.active]="filter === 'resolved'">
-          Resolvidas
-        </button>
+        <button mat-button (click)="filter='all'" [class.active]="filter==='all'">Todas</button>
+        <button mat-button (click)="filter='pending'" [class.active]="filter==='pending'">Pendentes</button>
+        <button mat-button (click)="filter='resolved'" [class.active]="filter==='resolved'">Resolvidas</button>
       </div>
       
       <div class="list-container">
@@ -44,7 +40,11 @@
           >
             <div class="list-chat-container">
               <div class="list-chat-img-container">
-                <img src="assets/{{conversation.image}}" alt="Profile Picture" class="list-chat-img">
+                <img 
+                  src="assets/{{conversation.image}}" 
+                  alt="Profile Picture" 
+                  class="list-chat-img"
+                >
               </div>
               <div class="list-chat-content">
                 <div class="list-chat-header">
@@ -55,7 +55,10 @@
                   <div class="list-chat-message-content">
                     {{ conversation.lastMessage }}
                   </div>
-                  <div class="list-chat-message-badge" *ngIf="conversation.unreadMessages > 0">
+                  <div 
+                    class="list-chat-message-badge" 
+                    *ngIf="conversation.unreadMessages > 0"
+                  >
                     {{ conversation.unreadMessages }}
                   </div>
                 </div>
@@ -67,10 +70,21 @@
     </div>
 
     <!-- CHAT PRINCIPAL -->
-    <div class="chat-main">
+    <div class="chat-main" *ngIf="!isMobileView || (isMobileView && showChat)">
       <mat-toolbar class="chat-header" color="primary">
         <div class="contact-info">
-          <img src="assets/{{currentConversation.image}}" alt="Profile Picture" class="contact-avatar" />
+          <!-- Botão de voltar (seta) para mobile -->
+          <button 
+            class="back-button" 
+            *ngIf="isMobileView" 
+            (click)="showChat = false">
+            <lucide-angular [img]="ArrowLeft" class="my-icon"></lucide-angular>
+          </button>
+          <img 
+            src="assets/{{currentConversation?.image}}" 
+            alt="Profile Picture" 
+            class="contact-avatar"
+          />
           <div class="contact-details">
             <span class="contact-name">{{ currentConversation?.name }}</span>
             <span class="contact-status">Online</span>
@@ -93,8 +107,8 @@
           class="message"
           *ngFor="let msg of currentConversation?.messages"
           [ngClass]="{
-            'sent': msg.type === 'sent',
-            'received': msg.type === 'received'
+            'sent': msg.type==='sent',
+            'received': msg.type==='received'
           }"
         >
           <div class="content">{{ msg.text }}</div>
@@ -116,7 +130,8 @@
           class="send-button"
           (click)="sendMessage()"
         >
-          Enviar  <lucide-angular [img]="Send" class="my-icon"></lucide-angular>
+          Enviar  
+          <lucide-angular [img]="Send" class="my-icon"></lucide-angular>
         </button>
       </div>
     </div>

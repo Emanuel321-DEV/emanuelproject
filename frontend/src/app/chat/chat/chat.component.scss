@@ -79,9 +79,9 @@ app-sidebar {
       }
 
       .list-header-input-search {
-        border: none; 
+        border: none;
         padding: 20px;
-        outline: none; 
+        outline: none;
         background: transparent;
       }
     }
@@ -127,6 +127,7 @@ app-sidebar {
         width: 275px;
         background-color: white;
         border: 1px solid rgb(230, 230, 230);
+
         &:hover {
           background-color: #f0f4f8;
         }
@@ -200,7 +201,7 @@ app-sidebar {
   padding: 0 0 8px 0;
   
   .chat-header {
-    background-color: #ffffff !important; 
+    background-color: #ffffff !important;
     border-bottom: 1px solid #e3e3e3;
     height: 64px;
     display: flex;
@@ -210,11 +211,25 @@ app-sidebar {
     .contact-info {
       display: flex;
       align-items: center;
-      height: 50px;
-      box-sizing: border-box;
+
+      .back-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .my-icon {
+          width: 24px;
+          height: 24px;
+          color: #000; 
+        }
+      }
 
       .contact-avatar {
-        height: 100%;  
+        height: 50px;
         width: 50px;
         border-radius: 50%;
         margin-right: 12px;
@@ -224,14 +239,6 @@ app-sidebar {
       .contact-details {
         display: flex;
         flex-direction: column;
-        box-sizing: border-box;
-        height: 100%;
-
-        .contact-name {
-          font-size: 1rem;
-          font-weight: 600;
-          color: #333;
-        }
 
         .contact-status {
           font-size: 0.85rem;
@@ -245,10 +252,10 @@ app-sidebar {
     }
 
     .resolve-button {
-      background-color: #11C44D; 
+      background-color: #11C44D;
       color: #fff;
       font-weight: 600;
-      border-radius: 5px; 
+      border-radius: 5px;
       padding: 8px 16px;
       display: flex;
       align-items: center;
@@ -280,6 +287,7 @@ app-sidebar {
   .message {
     margin: 0.5rem 0;
     display: flex;
+
     .content {
       padding: 0.75rem 1rem;
       border-radius: 18px;
@@ -291,6 +299,7 @@ app-sidebar {
 
   .sent {
     justify-content: flex-end;
+
     .content {
       background-color: #e6f3ff;
       color: #333;
@@ -300,8 +309,9 @@ app-sidebar {
 
   .received {
     justify-content: flex-start;
+
     .content {
-      background-color: #ffffff; 
+      background-color: #ffffff;
       color: #333;
       border-top-left-radius: 0;
     }
@@ -323,29 +333,29 @@ app-sidebar {
       .mat-form-field-flex,
       .mat-form-field-infix {
         height: 100%;
-        align-items: center; 
-        padding: 0 !important; 
+        align-items: center;
+        padding: 0 !important;
       }
     }
   
     .send-button {
-      background-color: #2196F3; 
-      color: #fff;              
+      background-color: #2196F3;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;                 
+      gap: 8px;
       padding: 0 1rem;
-      height: 100%;            
-      border-radius: 4px;      
-      font-weight: 500;        
-      text-transform: none;    
+      height: 100%;
+      border-radius: 4px;
+      font-weight: 500;
+      text-transform: none;
       cursor: pointer;
       border: 0;
       box-shadow: none !important;
 
       &:hover {
-        background-color: #1976D2; 
+        background-color: #1976D2;
       }
       &:active,
       &:focus {
@@ -356,25 +366,24 @@ app-sidebar {
 }
 
 ::-webkit-scrollbar {
-  width: 8px; 
+  width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #e0e0e0; 
-  border-radius: 4px; 
+  background-color: #e0e0e0;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #b3b3b3; 
+  background-color: #b3b3b3;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
   border-radius: 4px;
 }
 
 .list-chat-message-badge {
   background-color: #4caf50;
   color: white;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 11px;
   width: 18px;
   height: 18px;
   display: flex;
@@ -389,23 +398,20 @@ app-sidebar {
     display: block;
   }
 
-  mat-nav-list {
-    width: 97% !important;
-    .list-item {
-      height: 75px;
-      width: 100% !important;
-    }
-  }
-
   .conversation-list {
     width: 100% !important;
     border-right: none;
   }
 
-  .back-button {
-    display: inline-block;
-    background-color: transparent;
-    border: 0;
-    margin-right: 1rem;
+  .list-container {
+    padding: 0 10px;
+  }
+
+  mat-nav-list {
+    width: 100% !important;
+
+    .list-item {
+      width: 100% !important;
+    }
   }
 }

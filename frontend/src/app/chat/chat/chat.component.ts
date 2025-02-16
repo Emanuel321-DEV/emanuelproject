@@ -7,7 +7,17 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, MessageCircle, CircleUserRound, LayoutDashboard, Settings, Search, Check, Send } from 'lucide-angular';
+import { 
+  LucideAngularModule, 
+  MessageCircle, 
+  CircleUserRound, 
+  LayoutDashboard, 
+  Settings, 
+  Search, 
+  Check, 
+  Send, 
+  ArrowLeft 
+} from 'lucide-angular';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -28,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+  // Ícones
   readonly MessageCircle = MessageCircle;
   readonly CircleUserRound = CircleUserRound;
   readonly LayoutDashboard = LayoutDashboard;
@@ -35,6 +46,7 @@ export class ChatComponent implements OnInit {
   readonly Search = Search;
   readonly Check = Check;
   readonly Send = Send;
+  readonly ArrowLeft = ArrowLeft;
 
   searchTerm: string = '';
   filter: 'all' | 'pending' | 'resolved' = 'all';
@@ -44,9 +56,9 @@ export class ChatComponent implements OnInit {
   newMessage: string = '';
 
   sidebarOpen = false;
+  isMobileView = false;
+  showChat = false;
 
-  
-  
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
@@ -56,8 +68,16 @@ export class ChatComponent implements OnInit {
         this.currentConversation = convs[0];
       }
     });
-    
+    this.checkIfMobile();
+    window.addEventListener('resize', () => this.checkIfMobile());
     this.simulateIncomingMessages();
+  }
+
+  checkIfMobile() {
+    this.isMobileView = window.innerWidth <= 768;
+    if (this.isMobileView && !this.currentConversation) {
+      this.showChat = false;
+    }
   }
 
   toggleSidebar() {
@@ -81,23 +101,22 @@ export class ChatComponent implements OnInit {
     this.currentConversation = conversation;
     conversation.unreadMessages = 0;
     this.chatService.updateConversation(conversation);
+    if (this.isMobileView) {
+      this.showChat = true;
+    }
   }
 
   sendMessage() {
     if (this.newMessage.trim()) {
-      
       this.currentConversation.messages.push({
         text: this.newMessage,
         type: 'sent'
       });
       this.currentConversation.lastMessage = this.newMessage;
       this.chatService.updateConversation(this.currentConversation);
-
-      
       const conversationRef = this.currentConversation;
       this.newMessage = '';
 
-      
       setTimeout(() => {
         const fakeResponse = this.getFakeResponse();
         conversationRef.messages.push({
@@ -105,12 +124,10 @@ export class ChatComponent implements OnInit {
           type: 'received'
         });
         conversationRef.lastMessage = fakeResponse;
-        
         if (this.currentConversation.name !== conversationRef.name) {
           conversationRef.unreadMessages++;
         }
         this.chatService.updateConversation(conversationRef);
-        
         this.playNotificationSound();
       }, 1500);
     }
@@ -124,7 +141,6 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  
   getFakeResponse(): string {
     const responses = [
       'Olá, tudo bem?',
@@ -135,7 +151,6 @@ export class ChatComponent implements OnInit {
     return responses[Math.floor(Math.random() * responses.length)];
   }
 
-  
   simulateIncomingMessages() {
     setInterval(() => {
       if (this.conversations.length > 0) {
@@ -147,18 +162,15 @@ export class ChatComponent implements OnInit {
           type: 'received'
         });
         conv.lastMessage = fakeMessage;
-        
         if (this.currentConversation?.name !== conv.name) {
           conv.unreadMessages++;
         }
         this.chatService.updateConversation(conv);
-        
         this.playNotificationSound();
       }
-    }, 10000); 
+    }, 10000);
   }
 
-  
   playNotificationSound() {
     const audio = new Audio('assets/notification.mp3');
     audio.load();
