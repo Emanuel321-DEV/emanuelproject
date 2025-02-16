@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment';
+
 
 export interface JwtPayload {
   sub: string;
@@ -16,7 +18,8 @@ export interface JwtPayload {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth/login'; 
+  
+  private apiUrl = `${environment.apiUrl}/auth/login`; 
 
   constructor(private http: HttpClient) {}
 
@@ -35,8 +38,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
-
-  // Método para verificar se o usuário é admin
+  
   isAdmin(): boolean {
     const token = localStorage.getItem('token');
     if (!token) return false;
