@@ -22,7 +22,6 @@
 
 ### 💬 Atendimento via Chat
 - Simulação de conversas em tempo real.
-- Histórico de mensagens disponível para consulta.
 
 ### 📇 Gestão de Contatos
 - CRUD completo (Criar, Ler, Atualizar e Deletar) de contatos.
