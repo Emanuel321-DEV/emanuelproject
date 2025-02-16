@@ -1,21 +1,20 @@
-/* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export type ContactDocument = Contact & Document;
 
-@Schema()
+@Schema({ timestamps: true }) 
 export class Contact {
   @Prop({ required: true })
   name: string;
 
   @Prop({ required: true })
-  origem: string;
+  source: string;
 
   @Prop({ required: true })
-  descricao: string;
+  description: string; 
 
-  @Prop()
+  @Prop({ required: true }) 
   phone: string;
 }
 
