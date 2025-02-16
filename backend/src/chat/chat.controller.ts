@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('chat')
 export class ChatController {
