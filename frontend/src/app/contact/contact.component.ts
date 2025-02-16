@@ -42,7 +42,7 @@ import {
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  // Ícones
+  
   readonly MessageCircle = MessageCircle;
   readonly CircleUserRound = CircleUserRound;
   readonly LayoutDashboard = LayoutDashboard;
@@ -69,10 +69,8 @@ export class ContactComponent implements OnInit {
   showForm: boolean = false;
   selectedContact: any = null;
 
-  isDesktop = true;      // se a largura da janela > 768px
-  isContactOpen = false; // no mobile, indica se o formulário (detalhes) está aberto
-
-  // Controle da sidebar
+  isDesktop = true;      
+  isContactOpen = false; 
   sidebarOpen: boolean = false;
 
   constructor(
@@ -81,7 +79,7 @@ export class ContactComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onResize(); // Verifica tamanho inicial
+    this.onResize(); 
   }
 
   @HostListener('window:resize', ['$event'])
@@ -92,12 +90,11 @@ export class ContactComponent implements OnInit {
     }
   }
 
-  // Abre/fecha sidebar (mobile)
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-  // Filtro de contatos
+  
   get filteredContacts() {
     const term = this.searchTerm.toLowerCase();
     return this.contacts.filter(contact =>
@@ -107,7 +104,6 @@ export class ContactComponent implements OnInit {
     );
   }
 
-  // Novo contato
   openNewContactForm() {
     this.selectedContact = { name: '', description: '', source: '' };
     this.showForm = true;
@@ -116,7 +112,6 @@ export class ContactComponent implements OnInit {
     }
   }
 
-  // Editar contato
   openContactForm(contact: any) {
     this.selectedContact = { ...contact };
     this.showForm = true;
@@ -125,26 +120,21 @@ export class ContactComponent implements OnInit {
     }
   }
 
-  // Salvar contato
   saveContact() {
     const index = this.contacts.findIndex(c => c.name === this.selectedContact.name);
     if (index !== -1) {
-      // Atualiza contato existente
       this.contacts[index] = { ...this.selectedContact };
     } else {
-      // Novo contato
       this.contacts.push({ ...this.selectedContact });
     }
     this.closeContactForm();
   }
 
-  // Excluir contato
   deleteContact() {
     this.contacts = this.contacts.filter(c => c.name !== this.selectedContact.name);
     this.closeContactForm();
   }
 
-  // Fecha formulário (botão de voltar no mobile)
   closeContactForm() {
     this.showForm = false;
     this.selectedContact = null;
@@ -153,27 +143,22 @@ export class ContactComponent implements OnInit {
     }
   }
 
-  /**
-   * INICIAR CONVERSA:
-   *  - Verifica se já existe conversa com esse contato
-   *  - Se não existir, cria
-   *  - Navega para /chat, passando o nome via queryParams
-   */
+  
   startConversation() {
     if (!this.selectedContact) return;
 
-    // Verifica se já existe conversa com esse contato
+    
     const existingConv = this.chatService
       .getConversations()
       .find(conv => conv.name === this.selectedContact.name);
 
-    // Se não existir, cria
+    
     if (!existingConv) {
       const newConv = {
         name: this.selectedContact.name,
         lastMessage: '',
         resolved: false,
-        image: 'default-user.png', // Ajuste se quiser outra imagem
+        image: 'default-user.png', 
         unreadMessages: 0,
         messages: []
       };
@@ -182,7 +167,7 @@ export class ContactComponent implements OnInit {
       this.chatService.setConversations(all);
     }
 
-    // Navega para a tela de chat, passando o nome do contato via queryParams
+    
     this.router.navigate(['/chat'], {
       queryParams: { contactName: this.selectedContact.name }
     });

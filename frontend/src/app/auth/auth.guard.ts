@@ -10,9 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     router.navigate(['/login']);
     return false;
   }
-
   const requiresAdmin = route.data?.['requiresAdmin'] || false;
-  debugger;
   if (requiresAdmin && !authService.isAdmin()) {
     router.navigate(['/']);
     return false;

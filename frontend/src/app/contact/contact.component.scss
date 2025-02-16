@@ -1,4 +1,4 @@
-/* Container geral */
+
 .contact-container {
   display: flex;
   flex-direction: row;
@@ -46,7 +46,7 @@ app-sidebar {
   border-right: 1px solid #e3e3e3;
 }
 
-/* LISTA DE CONTATOS */
+
 .conversation-list {
   width: 320px;
   height: 100%;
@@ -124,7 +124,7 @@ app-sidebar {
       .list-item {
         border-radius: 0 !important;
         height: 75px;
-        width: 275px; // igual ao seu chat. Se quiser 100%, mude aqui
+        width: 275px; 
         background-color: white;
         border: 1px solid rgb(230, 230, 230);
         cursor: pointer;
@@ -191,7 +191,6 @@ app-sidebar {
   }
 }
 
-/* FORM DE CONTATO (lado direito) */
 .contact-main {
   flex: 1;
   display: flex;
@@ -247,7 +246,7 @@ app-sidebar {
   }
 }
 
-/* Botão de voltar (mobile) */
+
 .back-button {
   display: inline-block;
   background-color: transparent;
@@ -255,7 +254,6 @@ app-sidebar {
   margin-right: 1rem;
 }
 
-/* Responsividade (mobile) */
 @media (max-width: 768px) {
   .hamburger-btn {
     display: block;
