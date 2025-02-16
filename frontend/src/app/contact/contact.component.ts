@@ -23,6 +23,8 @@ import {
   ArrowLeft
 } from 'lucide-angular';
 
+import { ContactService, Contact } from '../services/contact.service';
+
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -42,7 +44,7 @@ import {
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  
+
   readonly MessageCircle = MessageCircle;
   readonly CircleUserRound = CircleUserRound;
   readonly LayoutDashboard = LayoutDashboard;
@@ -51,23 +53,10 @@ export class ContactComponent implements OnInit {
   readonly Search = Search;
   readonly ArrowLeft = ArrowLeft;
 
-  contacts: any[] = [
-    {
-      name: 'Warehouse 11',
-      description: '34999268588',
-      source: 'Telegram'
-    },
-    {
-      name: 'Cayo Garcia',
-      description: 'cayo@gmail.com',
-      source: 'Gmail'
-    },
-  ];
-
+  contacts: Contact[] = [];
   searchTerm: string = '';
-
   showForm: boolean = false;
-  selectedContact: any = null;
+  selectedContact: Contact | null = null;
 
   isDesktop = true;
   isContactOpen = false;
@@ -75,11 +64,13 @@ export class ContactComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private contactService: ContactService
   ) {}
 
   ngOnInit(): void {
     this.onResize();
+    this.loadContacts();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -103,15 +94,22 @@ export class ContactComponent implements OnInit {
     );
   }
 
+  loadContacts() {
+    this.contactService.getContacts().subscribe({
+      next: (data) => this.contacts = data,
+      error: (err) => console.error('Erro ao carregar contatos', err)
+    });
+  }
+
   openNewContactForm() {
-    this.selectedContact = { name: '', description: '', source: '' };
+    this.selectedContact = { name: '', description: '', source: '', phone: '' };
     this.showForm = true;
     if (!this.isDesktop) {
       this.isContactOpen = true;
     }
   }
 
-  openContactForm(contact: any) {
+  openContactForm(contact: Contact) {
     this.selectedContact = { ...contact };
     this.showForm = true;
     if (!this.isDesktop) {
@@ -120,18 +118,38 @@ export class ContactComponent implements OnInit {
   }
 
   saveContact() {
-    const index = this.contacts.findIndex(c => c.name === this.selectedContact.name);
-    if (index !== -1) {
-      this.contacts[index] = { ...this.selectedContact };
+    if (!this.selectedContact) return;
+    if (this.selectedContact._id) {
+      this.contactService.updateContact(this.selectedContact._id, this.selectedContact).subscribe({
+        next: (updatedContact) => {
+          const index = this.contacts.findIndex(c => c._id === updatedContact._id);
+          if (index !== -1) {
+            this.contacts[index] = updatedContact;
+          }
+          this.closeContactForm();
+        },
+        error: (err) => console.error('Erro ao atualizar contato', err)
+      });
     } else {
-      this.contacts.push({ ...this.selectedContact });
+      this.contactService.createContact(this.selectedContact).subscribe({
+        next: (newContact) => {
+          this.contacts.push(newContact);
+          this.closeContactForm();
+        },
+        error: (err) => console.error('Erro ao criar contato', err)
+      });
     }
-    this.closeContactForm();
   }
 
   deleteContact() {
-    this.contacts = this.contacts.filter(c => c.name !== this.selectedContact.name);
-    this.closeContactForm();
+    if (!this.selectedContact || !this.selectedContact._id) return;
+    this.contactService.deleteContact(this.selectedContact._id).subscribe({
+      next: () => {
+        this.contacts = this.contacts.filter(c => c._id !== this.selectedContact!._id);
+        this.closeContactForm();
+      },
+      error: (err) => console.error('Erro ao deletar contato', err)
+    });
   }
 
   closeContactForm() {
@@ -146,7 +164,7 @@ export class ContactComponent implements OnInit {
     if (!this.selectedContact) return;
 
     let conversations = this.chatService.getConversations();
-    let conversation = conversations.find(conv => conv.name === this.selectedContact.name);
+    let conversation = conversations.find(conv => conv.name === this.selectedContact!.name);
 
     if (!conversation) {
       conversation = {

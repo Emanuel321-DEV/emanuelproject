@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterLinkActive, Router } from '@angular/router';
 import { LucideAngularModule, MessageCircle, UserPen, LayoutDashboard, LogOut, Moon } from 'lucide-angular';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';

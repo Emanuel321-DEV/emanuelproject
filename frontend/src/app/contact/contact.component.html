@@ -86,17 +86,17 @@
       <div class="form-area">
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput [(ngModel)]="selectedContact.name" />
+          <input matInput [(ngModel)]="selectedContact!.name" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Descrição</mat-label>
-          <input matInput [(ngModel)]="selectedContact.description" />
+          <mat-label>Telefone</mat-label>
+          <input matInput [(ngModel)]="selectedContact!.phone" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Origem</mat-label>
-          <input matInput [(ngModel)]="selectedContact.source" />
+          <input matInput [(ngModel)]="selectedContact!.source" />
         </mat-form-field>
 
         <div class="buttons-row">
