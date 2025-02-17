@@ -7,11 +7,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LucideAngularModule, Headset } from 'lucide-angular';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../../components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatCardModule, MatButtonModule, MatInputModule, MatCheckboxModule, LucideAngularModule], 
+  imports: [FormsModule, MatCardModule, MatButtonModule, MatInputModule, MatCheckboxModule, LucideAngularModule, MatDialogModule], 
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -22,7 +24,8 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog
+  ) {}
 
   onLogin() {
     this.authService.login(this.email, this.password).subscribe(response => {
@@ -32,6 +35,9 @@ export class LoginComponent {
       }
     }, error => {
       console.error('Login failed', error);
+      this.dialog.open(ErrorDialogComponent, {
+        width: '300px'
+      });
     });
   }
 }

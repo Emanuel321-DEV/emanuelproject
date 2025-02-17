@@ -149,7 +149,7 @@ export class ChatComponent implements OnInit {
         }
         this.chatService.updateConversation(conversationRef);
         this.playNotificationSound();
-      }, 1500);
+      }, 15000);
     }
   }
 
@@ -199,7 +199,7 @@ export class ChatComponent implements OnInit {
         this.chatService.updateConversation(conv);
         this.playNotificationSound();
       }
-    }, 10000);
+    }, 15000);
   }
 
   playNotificationSound() {
