@@ -11,7 +11,7 @@ export class ChatService {
       lastMessage: 'Acho melhor não ...',
       resolved: false,
       image: "jon.jpg",
-      unreadMessages: 3,
+      unreadMessages: 0,
       messages: [
         { text: 'Como está John Snow ?', type: 'sent' },
         { text: 'Estou bem, vou me casar com Daenarys', type: 'received' },
