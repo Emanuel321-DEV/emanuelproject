@@ -42,7 +42,8 @@ export class ContactService {
     }
 
     updateContact(id: string, contact: Contact): Observable<Contact> {
-        return this.http.put<Contact>(`${this.apiUrl}/contacts/${id}`, contact, { headers: this.getHeaders() });
+      console.log("this is info", id, contact);
+      return this.http.put<Contact>(`${this.apiUrl}/contacts/${id}`, contact, { headers: this.getHeaders() });
     }
 
     deleteContact(id: string): Observable<any> {
