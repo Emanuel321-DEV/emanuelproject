@@ -197,7 +197,7 @@ export class ChatComponent implements OnInit {
           conv.unreadMessages++;
         }
         this.chatService.updateConversation(conv);
-        this.playNotificationSound();
+        // this.playNotificationSound();
       }
     }, 10000);
   }
